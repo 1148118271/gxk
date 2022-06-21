@@ -10,6 +10,15 @@ use tower_http::services::{ServeDir, ServeFile};
 async fn main() {
     let app = Router::new()
         .route("/", get(index))
+        .nest("/favicon.ico",
+              get_service(ServeDir::new("static/favicon.ico"))
+            .handle_error(|error: std::io::Error| async move {
+                (
+                    StatusCode::INTERNAL_SERVER_ERROR,
+                    format!("Unhandled internal error: {}", error),
+                )
+            })
+        )
         .nest( "/static",
                get_service(ServeDir::new("static"))
                    .handle_error(|error: std::io::Error| async move {
