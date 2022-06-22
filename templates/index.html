@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <title>Kang</title>
-    <link type="text/css" rel="styleSheet" href="../static/css/index.css" />
+    <link type="text/css" rel="styleSheet" href="/static/css/index.css" />
 </head>
 <body>
     <main>
@@ -13,7 +13,7 @@
         <div class="content">
             <ul>
                 <li>
-                    <a href="{{ about_url }}">关于我</a>
+                    <a href="/about">关于我</a>
                 </li>
                 <li>
                     帖子
@@ -22,12 +22,12 @@
                     {% for post in posts %}
                     <li>
                         <span>{{ post.date }}</span>
-                        <a href="post/{{ post.url }}">{{ post.title }}</a>
+                        <a href="/post/{{ post.url }}">{{ post.title }}</a>
                     </li>
                     {% endfor %}
                 </ul>
                 <li>
-                    <a href="#">所有帖子</a>
+                    <a href="/post">所有帖子</a>
                 </li>
                 <li>
                     <a href="#">朋友们</a>

@@ -16,7 +16,6 @@ pub async fn index() -> impl IntoResponse {
     } else { posts.posts };
 
     let template = IndexTemplate {
-        about_url: "about".to_string(),
         posts
     };
     HtmlTemplate(template)
@@ -25,6 +24,5 @@ pub async fn index() -> impl IntoResponse {
 #[derive(Template)]
 #[template(path = "index.html")]
 pub struct IndexTemplate {
-    pub about_url: String,
     pub posts: Vec<Post>
 }

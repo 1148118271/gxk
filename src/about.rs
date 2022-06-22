@@ -1,4 +1,3 @@
-use std::path::Path;
 use axum::response::IntoResponse;
 use askama::Template;
 use crate::html::HtmlTemplate;

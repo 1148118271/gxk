@@ -1,7 +1,6 @@
 use std::fmt;
 use std::fs::File;
 use std::io::Read;
-use askama::shared::Config;
 use serde::Deserialize;
 
 

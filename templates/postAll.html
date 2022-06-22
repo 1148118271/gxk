@@ -2,12 +2,8 @@
 <html lang="zh-hans">
 <head>
     <meta charset="UTF-8">
-    <title>Post</title>
+    <title>PostAll</title>
     <link type="text/css" rel="styleSheet" href="/static/css/index.css" />
-    <link rel="stylesheet"
-          href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/11.5.1/styles/agate.min.css">
-    <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/11.5.1/highlight.min.js"></script>
-    <script type="text/javascript">hljs.highlightAll();</script>
 </head>
 <body>
 <main>
@@ -15,7 +11,19 @@
         <h2><a href="/">&lt;&lt;</a></h2>
     </header>
     <div class="content">
-        {{ info|safe }}
+        <div class="post-title">
+            <h3>所有帖子</h3>
+        </div>
+        <div>
+            <ul>
+                {% for post in posts %}
+                <li>
+                    <span>{{ post.date }}</span>
+                    <a href="/post/{{ post.url }}">{{ post.title }}</a>
+                </li>
+                {% endfor %}
+            </ul>
+        </div>
     </div>
     <footer>
         <div class="footer-svg">
