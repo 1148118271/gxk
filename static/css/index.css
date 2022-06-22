@@ -49,3 +49,7 @@ footer {
 code {
     border-radius: 0.7rem;
 }
+
+img {
+    width: 100%;
+}
