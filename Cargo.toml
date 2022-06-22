@@ -8,5 +8,8 @@ edition = "2021"
 [dependencies]
 axum = "0.5.9"
 tokio = { version = "1", features = ["full"] }
-askama = "0.10"
+askama = "0.11"
 tower-http = { version = "0.3.0", features = ["fs", "trace"] }
+markdown = "0.3"
+serde = "1.0"
+toml = "0.5"
