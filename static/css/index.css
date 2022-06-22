@@ -10,7 +10,7 @@ body {
 }
 
 main {
-    max-width: 640px;   /*定宽*/
+    max-width: 740px;   /*定宽*/
     margin:5% auto;   /*margin-left 与 margin-right 设置为 auto*/
 }
 
@@ -44,4 +44,8 @@ footer {
 
 .post-title {
     margin-bottom: 1rem;
+}
+
+code {
+    border-radius: 0.7rem;
 }

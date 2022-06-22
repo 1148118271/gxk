@@ -3,6 +3,7 @@ mod html;
 mod index;
 mod about;
 mod md;
+mod post;
 
 use std::net::SocketAddr;
 use axum::http::StatusCode;
@@ -15,6 +16,7 @@ async fn main() {
     let app = Router::new()
         .route("/", get(index::index))
         .route("/about", get(about::about))
+        .route("/post/:url", get(post::post))
         .nest("/favicon.ico",
               get_service(ServeDir::new("static/favicon.ico"))
                   .handle_error(|error: std::io::Error| async move {

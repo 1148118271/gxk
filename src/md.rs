@@ -16,3 +16,13 @@ pub fn about() -> String {
     };
     html
 }
+
+pub fn post(url: String) -> String {
+    let p = format!("data/{}.md", url);
+    let path = Path::new(p.as_str());
+    let html = match markdown::file_to_html(path) {
+        Ok(v) => v,
+        Err(e) => format!("Error: {}", e.to_string())
+    };
+    html
+}

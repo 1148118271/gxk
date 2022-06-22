@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="zh">
+<html lang="zh-hans">
 <head>
     <meta charset="UTF-8">
     <title>Kang</title>
@@ -22,7 +22,7 @@
                     {% for post in posts %}
                     <li>
                         <span>{{ post.date }}</span>
-                        <a href="{{ post.url }}">{{ post.title }}</a>
+                        <a href="post/{{ post.url }}">{{ post.title }}</a>
                     </li>
                     {% endfor %}
                 </ul>
