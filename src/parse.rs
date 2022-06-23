@@ -1,7 +1,9 @@
 use std::fmt;
 use std::fs::File;
 use std::io::Read;
+use std::path::Path;
 use serde::Deserialize;
+use crate::path;
 
 
 #[derive(Deserialize, Debug)]
@@ -12,7 +14,8 @@ pub struct Posts {
 
 impl Posts {
     pub fn init() -> Self {
-        if let Ok(mut file) = File::open("data/index.toml") {
+        let path = path::filling("data/index.toml");
+        if let Ok(mut file) = File::open(path) {
             let mut str_val = String::new();
             if let Ok(_) = file.read_to_string(&mut str_val) {
                 if let Ok(toml) = toml::from_str(&str_val) {

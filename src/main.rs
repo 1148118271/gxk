@@ -5,7 +5,9 @@ mod about;
 mod md;
 mod post;
 mod friends;
+mod path;
 
+use std::env::Args;
 use std::net::SocketAddr;
 use axum::http::StatusCode;
 use axum::Router;
@@ -14,6 +16,8 @@ use tower_http::services::ServeDir;
 
 #[tokio::main]
 async fn main() {
+    let favicon_p = path::filling("static/favicon.ico");
+    let static_p = path::filling("static");
     let app = Router::new()
         .route("/", get(index::index))
         .route("/about", get(about::about))
@@ -21,7 +25,7 @@ async fn main() {
         .route("/post", get(post::post_all))
         .route("/friends", get(friends::friends))
         .nest("/favicon.ico",
-              get_service(ServeDir::new("static/favicon.ico"))
+              get_service(ServeDir::new(favicon_p))
                   .handle_error(|error: std::io::Error| async move {
                       (
                         StatusCode::INTERNAL_SERVER_ERROR,
@@ -30,7 +34,7 @@ async fn main() {
             })
         )
         .nest( "/static",
-               get_service(ServeDir::new("static"))
+               get_service(ServeDir::new(static_p))
                    .handle_error(|error: std::io::Error| async move {
                        (
                            StatusCode::INTERNAL_SERVER_ERROR,
