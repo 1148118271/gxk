@@ -7,7 +7,6 @@ mod post;
 mod friends;
 mod path;
 
-use std::env::Args;
 use std::net::SocketAddr;
 use axum::http::StatusCode;
 use axum::Router;

@@ -7,8 +7,8 @@ use crate::parse;
 use crate::parse::Post;
 
 pub async fn post(extract::Path(url): extract::Path<String>) -> impl IntoResponse {
-    let html = md::post(url);
-    let template = PostTemplate { info: html };
+    let (html, title) = md::post(url);
+    let template = PostTemplate { title, info: html };
     HtmlTemplate(template)
 }
 
@@ -22,6 +22,7 @@ pub async fn post_all() -> impl IntoResponse {
 #[derive(Template)]
 #[template(path = "post.html")]
 pub struct PostTemplate {
+    pub title: String,
     pub info: String
 }
 
