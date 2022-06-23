@@ -4,6 +4,7 @@ mod index;
 mod about;
 mod md;
 mod post;
+mod friends;
 
 use std::net::SocketAddr;
 use axum::http::StatusCode;
@@ -18,6 +19,7 @@ async fn main() {
         .route("/about", get(about::about))
         .route("/post/:url", get(post::post))
         .route("/post", get(post::post_all))
+        .route("/friends", get(friends::friends))
         .nest("/favicon.ico",
               get_service(ServeDir::new("static/favicon.ico"))
                   .handle_error(|error: std::io::Error| async move {
