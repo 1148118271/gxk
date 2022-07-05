@@ -53,3 +53,7 @@ code {
 img {
     width: 100%;
 }
+
+.del a {
+    margin-left: 1rem;
+}
