@@ -15,23 +15,15 @@
             <h3>备忘录</h3>
         </div>
         <div>
-            <div class="del">
-                <ul>
-                    <li>
-                        <span>这是一条备忘录</span>
-                        <a href="#">del</a>
-                    </li>
-                    <li>
-                        <span>asdasfasda</span>
-                        <a href="#">del</a>
-                    </li>
-                </ul>
-            </div>
-            <div>
-
-                <textarea   style="border:#00fff2 1px solid; overflow:visible; color:#FFFFFF;"></textarea>
-            </div>
-
+            <span><a href="#">添加</a></span>
+            <ul style="list-style:none">
+                {% for memo in memos %}
+                <li>
+                    <p>{{ memo }}</p>
+                    <a href="javascript:del({{loop.index}});">删除</a>
+                </li>
+                {% endfor %}
+            </ul>
         </div>
     </div>
     <footer>
@@ -68,5 +60,21 @@
         </div>
     </footer>
 </main>
+
+<script>
+
+    function del(lineNum) {
+        let xhr = new XMLHttpRequest();
+        xhr.open("post", "/memo/del")
+        xhr.setRequestHeader("Content-Type", "application/json"); // 设置请求头
+        let json = {lineNum}
+        xhr.send(JSON.stringify(json))
+        xhr.onreadystatechange = function () {
+           console.log(xhr.response)
+        }
+    }
+
+</script>
+
 </body>
 </html>
