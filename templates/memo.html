@@ -70,10 +70,6 @@
 <script>
 
 
-    $('form').submit(function(){
-        $(this).children('input[type=submit]').prop('disabled', true);
-    });
-
     function add() {
         let value = document.getElementById("value").value;
         let xhr = new XMLHttpRequest();
