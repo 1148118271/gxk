@@ -15,11 +15,17 @@
             <h3>备忘录</h3>
         </div>
         <div>
-            <span><a href="#">添加</a></span>
+            <span>
+                 <label>
+                    <textarea id="value"></textarea>
+                </label>
+                <br />
+                <a href="javascript:add();">添加</a>
+            </span>
             <ul style="list-style:none">
                 {% for memo in memos %}
                 <li>
-                    <p>{{ memo }}</p>
+                    <p>{{ memo|safe }}</p>
                     <a href="javascript:del({{loop.index}});">删除</a>
                 </li>
                 {% endfor %}
@@ -63,14 +69,51 @@
 
 <script>
 
-    function del(lineNum) {
+
+    $('form').submit(function(){
+        $(this).children('input[type=submit]').prop('disabled', true);
+    });
+
+    function add() {
+        let value = document.getElementById("value").value;
         let xhr = new XMLHttpRequest();
-        xhr.open("post", "/memo/del")
+        xhr.open("post", "/memo/add")
         xhr.setRequestHeader("Content-Type", "application/json"); // 设置请求头
-        let json = {lineNum}
+        value = value.replaceAll("\n", "<br />");
+        let json = {value}
         xhr.send(JSON.stringify(json))
         xhr.onreadystatechange = function () {
-           console.log(xhr.response)
+            if (xhr.readyState === 4 && xhr.status === 200) {
+                if (xhr.response === "ok") {
+                    let oA = document.createElement("a");
+                    oA.href = "/memo";
+                    oA.click();
+                }
+            }
+
+        }
+    }
+
+    function del(lineNum) {
+        if (confirm("确定要删除吗！")) {
+            let xhr = new XMLHttpRequest();
+            xhr.open("post", "/memo/del")
+            xhr.setRequestHeader("Content-Type", "application/json"); // 设置请求头
+            let json = {lineNum}
+            xhr.send(JSON.stringify(json))
+            xhr.onreadystatechange = function () {
+                if (xhr.readyState === 4 && xhr.status === 200) {
+                    if (xhr.response === "ok") {
+                        let oA = document.createElement("a");
+                        oA.href = "/memo";
+                        oA.click();
+                    }
+                }
+
+            }
+        }
+        else {
+            alert("已经取消了删除操作");
         }
     }
 

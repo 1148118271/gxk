@@ -26,6 +26,7 @@ async fn main() {
         .route("/friends", get(friends::friends))
         .route("/memo", get(memo::memo))
         .route("/memo/del", post(memo::del))
+        .route("/memo/add", post(memo::add))
         .nest("/favicon.ico",
               get_service(ServeDir::new(favicon_p))
                   .handle_error(|error: std::io::Error| async move {
