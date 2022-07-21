@@ -6,11 +6,12 @@ mod md;
 mod post;
 mod friends;
 mod path;
+mod memo;
 
 use std::net::SocketAddr;
 use axum::http::StatusCode;
 use axum::Router;
-use axum::routing::{get, get_service};
+use axum::routing::{get, post, get_service};
 use tower_http::services::ServeDir;
 
 #[tokio::main]
@@ -23,6 +24,9 @@ async fn main() {
         .route("/post/:url", get(post::post))
         .route("/post", get(post::post_all))
         .route("/friends", get(friends::friends))
+        .route("/memo", get(memo::memo))
+        .route("/memo/del", post(memo::del))
+        .route("/memo/add", post(memo::add))
         .nest("/favicon.ico",
               get_service(ServeDir::new(favicon_p))
                   .handle_error(|error: std::io::Error| async move {
