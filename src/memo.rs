@@ -6,6 +6,7 @@ use axum::response::IntoResponse;
 use askama::Template;
 use axum::Json;
 use crate::html::HtmlTemplate;
+use crate::path;
 
 pub async fn memo() -> impl IntoResponse {
     let vec = read_file().await;
@@ -14,6 +15,7 @@ pub async fn memo() -> impl IntoResponse {
 }
 
 pub async fn del(params: Json<HashMap<String, u32>>) -> impl IntoResponse {
+    let path = path::filling("data/memo.d");
     let mut vec = read_file().await;
     let line_num = params.get("lineNum");
     if line_num.is_none() {
@@ -24,7 +26,7 @@ pub async fn del(params: Json<HashMap<String, u32>>) -> impl IntoResponse {
         .write(true)
         .create(true)
         .truncate(true)
-        .open("data/memo.d").unwrap();
+        .open(path).unwrap();
     for line in &vec {
         file.write(format!("{}\r\n", line).as_bytes()).unwrap();
     }
@@ -33,6 +35,7 @@ pub async fn del(params: Json<HashMap<String, u32>>) -> impl IntoResponse {
 
 
 pub async fn add(params: Json<HashMap<String, String>>) -> impl IntoResponse {
+    let path = path::filling("data/memo.d");
     let value = params.get("value");
     if value.is_none() {
         return "no"
@@ -45,14 +48,15 @@ pub async fn add(params: Json<HashMap<String, String>>) -> impl IntoResponse {
         .write(true)
         .create(true)
         .append(true)
-        .open("data/memo.d").unwrap();
+        .open(path).unwrap();
     file.write(format!("{}\r\n", value).as_bytes()).unwrap();
     "ok"
 }
 
 async fn read_file() -> Vec<String> {
+    let path = path::filling("data/memo.d");
     let mut strings = vec![];
-    if let Ok(file) = fs::File::open("data/memo.d") {
+    if let Ok(file) = fs::File::open(path) {
         let mut lines = BufReader::new(file).lines();
         loop {
             let line = lines.next();
