@@ -1,12 +1,15 @@
 use std::path::PathBuf;
+use comrak::{ComrakOptions, markdown_to_html};
 use crate::path;
 
 fn get_html_str(path: PathBuf) -> String {
-    let html = match markdown::file_to_html(path.as_path()) {
-        Ok(v) => v,
-        Err(e) => format!("Error: {}", e.to_string())
-    };
-    html
+    let readme = std::fs::read_to_string(path.as_path()).unwrap();
+    let mut comrak = ComrakOptions::default();
+    comrak.extension.strikethrough = true;
+    comrak.extension.table = true;
+    comrak.extension.autolink = true;
+    comrak.render.unsafe_ = true;
+    markdown_to_html(&readme, &comrak)
 }
 
 
